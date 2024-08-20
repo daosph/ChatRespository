@@ -12,4 +12,7 @@ public class ChatSocketsApplication {
 		log.info("Inicia WS chat");
 	}
 
+
 }
+
+
