@@ -9,7 +9,10 @@ public class ChatSocketsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ChatSocketsApplication.class, args);
-		log.info("Inicia WS chat");
+		log.info("Inicia login");
 	}
 
+
 }
+
+
