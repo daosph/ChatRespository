@@ -1,5 +1,6 @@
 package com.chatSockets.chatSockets.services;
 
+import com.chatSockets.chatSockets.dto.UserRegisterDto;
 import com.chatSockets.chatSockets.entity.Usuario;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,4 +13,6 @@ public interface UsuarioService {
     Optional<Usuario> login(String usuario, String password);
 
     Usuario findByUsername(String username);
+
+    String registerUser(UserRegisterDto usuario);
 }

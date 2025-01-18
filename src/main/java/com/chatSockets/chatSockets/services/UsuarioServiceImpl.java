@@ -1,11 +1,16 @@
 package com.chatSockets.chatSockets.services;
 
+import com.chatSockets.chatSockets.configuration.EncodePaswords;
+import com.chatSockets.chatSockets.dto.UserRegisterDto;
+import com.chatSockets.chatSockets.entity.Rol;
 import com.chatSockets.chatSockets.entity.Usuario;
+import com.chatSockets.chatSockets.repository.RolRepository;
 import com.chatSockets.chatSockets.repository.UsuarioRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +28,9 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
+    private RolRepository rolRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -35,9 +43,9 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
         log.info("User found: {}, role: {}", username, role);
 
-        return org.springframework.security.core.userdetails.User
+        return User
                 .withUsername(usuario.getUsuario())
-                .password(usuario.getPassword()) // La contraseña ya debería estar codificada
+                .password(usuario.getPassword())
                 .roles(role)
                 .build();
     }
@@ -62,4 +70,26 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         return usuarioRepository.findByUsuario(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
+
+    @Override
+    public String registerUser(UserRegisterDto usuario) {
+        Usuario usuarioEntity = new Usuario();
+        EncodePaswords encodePaswords = new EncodePaswords();
+
+        String paswordCodifiing = encodePaswords.encodeUserPasword(usuario.getPassword());
+        Rol rol = new Rol();
+        rol.setId(usuario.getRol());
+
+        usuarioEntity.setNombre(usuario.getName());
+        usuarioEntity.setApellido(usuario.getLastName());
+        usuarioEntity.setPassword(paswordCodifiing);
+        usuarioEntity.setTelefono(usuario.getTelephone());
+        usuarioEntity.setUsuario(usuario.getUser());
+        usuarioEntity.setRol(rol);
+
+        usuarioRepository.save(usuarioEntity);
+
+        return "Usuario registrado exitosamente";
+    }
+
 }

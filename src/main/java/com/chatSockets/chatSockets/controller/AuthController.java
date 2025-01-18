@@ -1,5 +1,6 @@
 package com.chatSockets.chatSockets.controller;
 
+import com.chatSockets.chatSockets.dto.UserRegisterDto;
 import com.chatSockets.chatSockets.dto.UserResponse;
 import com.chatSockets.chatSockets.entity.Usuario;
 import com.chatSockets.chatSockets.services.AuthService;
@@ -63,9 +64,11 @@ public class AuthController {
         return ResponseEntity.ok("Logged out");
     }
 
-    @GetMapping("/prueba")
-    public ResponseEntity<String> prueba() {
-        log.info("Prueba endpoint accessed");
-        return ResponseEntity.ok("Hola");
+
+    @PostMapping("/register-user")
+    public ResponseEntity<String> registerUser(@RequestBody UserRegisterDto usuario) {
+
+        return ResponseEntity.ok(usuarioService.registerUser(usuario));
+
     }
 }
