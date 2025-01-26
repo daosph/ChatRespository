@@ -1,5 +1,6 @@
 package com.chatSockets.chatSockets.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,7 @@ public class Usuario {
 
     @ManyToOne
     @JoinColumn(name = "rol_id", nullable = false)
+    @JsonIgnore
     private Rol rol;
 
 }
