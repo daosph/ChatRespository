@@ -1,7 +1,9 @@
 package com.chatSockets.chatSockets.controller;
 
+import com.chatSockets.chatSockets.dto.RolDto;
 import com.chatSockets.chatSockets.dto.UserRegisterDto;
 import com.chatSockets.chatSockets.dto.UserResponse;
+import com.chatSockets.chatSockets.entity.Rol;
 import com.chatSockets.chatSockets.entity.Usuario;
 import com.chatSockets.chatSockets.services.AuthService;
 import com.chatSockets.chatSockets.services.UsuarioService;
@@ -15,6 +17,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -71,4 +75,9 @@ public class AuthController {
         return ResponseEntity.ok(usuarioService.registerUser(usuario));
 
     }
+
+    @GetMapping("/get-roles")
+    public ResponseEntity<List<RolDto>>getRoles(){
+        return ResponseEntity.ok(usuarioService.getRoles());
+        }
 }

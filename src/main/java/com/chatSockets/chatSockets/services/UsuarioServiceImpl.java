@@ -1,6 +1,7 @@
 package com.chatSockets.chatSockets.services;
 
 import com.chatSockets.chatSockets.configuration.EncodePaswords;
+import com.chatSockets.chatSockets.dto.RolDto;
 import com.chatSockets.chatSockets.dto.UserRegisterDto;
 import com.chatSockets.chatSockets.entity.Rol;
 import com.chatSockets.chatSockets.entity.Usuario;
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -90,6 +92,11 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         usuarioRepository.save(usuarioEntity);
 
         return "Usuario registrado exitosamente";
+    }
+
+    @Override
+    public List<RolDto> getRoles() {
+        return rolRepository.findAllRolDto();
     }
 
 }
